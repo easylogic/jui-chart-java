@@ -1,6 +1,7 @@
 package com.jennifer.ui.chart;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -29,12 +30,31 @@ public abstract  class AbstractDraw {
         return attrs;
     }
 
+    public boolean has(String key) {
+        return attrs.containsKey(key);
+    }
+
+    public int i(String key) {
+        return Integer.valueOf((String)attrs.get(key)).intValue();
+    }
+
+    public long l(String key) {
+        return Long.valueOf((String)attrs.get(key)).longValue();
+    }
+
+    public double d(String key) {
+        return Double.valueOf((String)attrs.get(key)).doubleValue();
+    }
+
+    public List<Object> list(String key) {
+        return (List<Object>)attrs.get(key);
+    }
+
     public Object render() {
 
         this.drawBefore();
 
         return this.draw();
     }
-
 
 }
