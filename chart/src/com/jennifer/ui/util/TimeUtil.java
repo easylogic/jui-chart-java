@@ -7,6 +7,7 @@ import java.util.Date;
 ;
 
 public class TimeUtil {
+
     public static Date add(Date d, Time type, int interval) {
         Calendar c = Calendar.getInstance();
         c.setTime(d);
@@ -18,7 +19,7 @@ public class TimeUtil {
         } else if (type == Time.DAYS) {
             c.add(Calendar.DATE, interval);
         } else if (type == Time.HOURS) {
-            c.add(Calendar.HOUR, interval);
+            c.add(Calendar.HOUR_OF_DAY, interval);
         } else if (type == Time.MINUTES) {
             c.add(Calendar.MINUTE, interval);
         } else if (type == Time.SECONDS) {

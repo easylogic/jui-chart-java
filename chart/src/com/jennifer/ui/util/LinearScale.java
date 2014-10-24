@@ -120,21 +120,18 @@ public class LinearScale extends AbstractScale {
 
     }
 
-    public Scale rangeRound(double[] range) {
-        _round = round;
+    public LinearScale rangeRound(double[] range) {
+        _round = true;
 
-        return this.range(range);
+        return (LinearScale)this.range(range);
     }
 
     public double invert(double y) {
         return new LinearScale(this.range(), this.domain()).get(y);
     }
 
-    private double[] convert(ArrayList<Double> list) {
-        double[] a  = new double[list.size()];
-        for(int i =0, len = a.length; i < len; i++) a[i] = list.get(i).doubleValue();
-
-        return a ;
+    public double[] ticks() {
+        return ticks(10, false, 1000000);
     }
 
     public double[] ticks(int count, boolean isNice, int intNumber) {
@@ -144,21 +141,24 @@ public class LinearScale extends AbstractScale {
             return new double[0];
         }
 
-        var obj = math.nice(_domain[0], _domain[1], count || 10, isNice || false);
+        double[] arr = MathUtil.nice(_domain[0], _domain[1], count, isNice );
 
-        var arr = [];
+        double min = arr[0];
+        double max = arr[1];
+        double range = arr[2];
+        double spacing = arr[3];
 
-        var start = obj.min * intNumber;
-        var end = obj.max * intNumber;
+        double start = min * intNumber;
+        double end = max * intNumber;
         while (start <= end) {
-            arr.push(start / intNumber);
-            start += obj.spacing * intNumber;
+            list.add(Double.valueOf(start/intNumber));
+            start += spacing * intNumber;
         }
 
-        if (arr[arr.length - 1] * intNumber != end && start > end) {
-            arr.push(end / intNumber);
+        if (list.get(list.size()-1).doubleValue() * intNumber != end && start > end) {
+            list.add(Double.valueOf(end / intNumber));
         }
 
-        return convert(list);
+        return ScaleUtil.convert(list);
     }
 }

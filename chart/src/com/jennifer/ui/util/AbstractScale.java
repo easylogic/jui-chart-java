@@ -6,6 +6,7 @@ package com.jennifer.ui.util;
 public abstract class AbstractScale implements Scale {
     protected double[] _domain;
     protected double[] _range;
+    protected double _rangeBand;
 
     protected boolean _clamp;
 
@@ -54,7 +55,7 @@ public abstract class AbstractScale implements Scale {
 
     @Override
     public double rangeBand() {
-        return 0;
+        return _rangeBand;
     }
 
     @Override
